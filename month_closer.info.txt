@@ -1,0 +1,157 @@
+#!/usr/bin/env python3
+
+'''
+This script closes the billing at the month's turn,
+  ie, it updates, if any, a debt carried value
+  according to the rules for monetary correction.
+  Or, if payment satisfies debit (inmonth_amount)
+  on date, closing will zero the account.
+
+Rules for closing:
+
+(To improve the whole generalization of the Hypotheses.)
+
+1) if there's no debt, it closes month with 0 debt;
+2) if there's no debt, but payment was late,
+   create a rubrica mora with the increasing itens
+   (incidence fine, fix monthly interest, monetary correction)
+   associated to the lateness in payment.
+   For that, there was created a tuplelist called "bookkeeping".
+
+  eg. a payment due to the 10th of the month, paid later,
+  will have, in general, the following increments:
+  a) 10% incidence fine
+  b) n days (from day 1 even if payment is on the 10th)
+     of monetary correction (from an official index)
+     and its equivalent (n days / n days in month) in fix interest;
+
+3) if there's debt and payment is on date, the following applies;
+  a) do not add the 10% incidence fine;
+  b) apply b) item above, ie, the monetary correction only to
+     the part that is a carried debt;
+
+4) if there's debt and payment is late on month, the following applies;
+  a) add 10% incidence fine to the former month's amount
+  b) apply the b) item as above;
+  c) find the balance on payment day;
+  d) apply monetary correction and fix interest to balance within the remaining days of month
+
+Examples
+  [1] (the most direct, rentee has no debits)
+  carried debt is 0
+  duedate is the 10th
+  payment is on date
+  to do: just pay credit to debit, without any addings
+
+  [2] (rentee has no debts and pays late)
+  duedate is the 10th
+  payment is late on the 20th
+    a) the month's immediate amount is 10% increased
+    b) the month's immediate amount is also corrected monetarily to closing date (fix interest plus official monetary correction index)
+    c) if there appears a residue debt, take this to the closing day
+  >>> Number Example:
+    a) remains = 50 + 50*(0.1 + (0.01+monet_corr)*(20/31)) - 40
+    b) residue_debt = remains*(1 + (0.01+monet_corr)*(10/31))
+  Calculating it:
+    a) remains = 50 + 50*(0.1 + (0.01+0.003)*(20/31)) - 40
+       remains = 15.41935483870968
+    b) residue_debt = 15.41935483870968*(1 + (0.01+0.003)*(10/31))
+       residue_debt = 15.484016649323623
+
+  [3] (rentee has debts and pays on date)
+  carried debt is 100
+  duedate is the 10th
+  payment is on date
+  to do: just correct the former debt on the next bill
+
+  [4] (rentee has debts and pays late in month)
+      [accompanying spread sheet will help here because this is the most complicated case])
+  carried debt is 100
+  immediate month's bill is 50
+  duedate is the 10th
+  payment is later to the nth day in month (n > 10)
+    say, payment is on the 20th (month in case has 31 days)
+  payment is 40
+  to do:
+    a) the month's immediate amount is 10% increased
+    b) the month's immediate amount is also corrected monetarily to closing date (fix interest plus official monetary correction index)
+    b) former debt is also corrected n days as b) above
+    d) new debt, if any, replaces old one on the closing day
+
+    a) remains = (100 + 50) + 50*0.1 + (100+50)*((0.01+monet_corr)*(20/31)) - 40
+    b) new_debt = remains * (1 + (0.01 + monet_corr)*((31-20)/31))
+
+    Calculating it:
+    Supposing monet_corr = 0.3% or 0.003
+    remains = 100 + 50 + 50*0.1 + (100+50)*((0.01 + 0.003)*(20/31)) - 40
+    Solving it gives:
+    remains = 116.25806451612902
+    Calculating new_debt:
+    new_debt = 116.25806451612902 * (1 + (0.01 + 0.003)*((31-20)/31))
+    new_debt = 116.79435171696149
+'''
+
+'''
+https://codeyarns.com/2017/02/27/how-to-convert-python-dict-to-class-object-with-fields/
+
+>>> from collections import namedtuple
+>>> d = {"name": "joe", "age": 20}
+>>> d
+{'age': 20, 'name': 'joe'}
+>>> d_named = namedtuple("Employee", d.keys())(*d.values())
+>>> d_named
+Employee(name='joe', age=20)
+>>> d_named.name
+'joe'
+
+==>>> Another way:
+
+    def __init__(self, dictionary):
+        """Constructor"""
+        for key in dictionary:
+            setattr(self, key, dictionary[key])
+'''
+
+'''
+https://www.pythonprogramming.in/how-to-calculate-the-time-difference-between-two-datetime-objects.html
+##
+# Python's program to calculate time difference between two datetime objects.
+ 
+import datetime
+from datetime import timedelta
+ 
+datetimeFormat = '%Y-%m-%d %H:%M:%S.%f'
+date1 = '2016-04-16 10:01:28.585'
+date2 = '2016-03-10 09:56:28.067'
+diff = datetime.datetime.strptime(date1, datetimeFormat)\
+    - datetime.datetime.strptime(date2, datetimeFormat)
+ 
+print("Difference:", diff)
+print("Days:", diff.days)
+print("Microseconds:", diff.microseconds)
+print("Seconds:", diff.seconds)
+
+
+https://www.codespeedy.com/how-to-subtract-days-from-date-in-python/
+
+from datetime import datetime, timedelta
+
+Subtract days from the current date in Python
+
+The below program will subtract any specific days from current date
+
+    from datetime import datetime, timedelta
+    current_date = datetime.now()
+    new_date = current_date - timedelta(days=52)
+    print (new_date)
+
+https://www.w3resource.com/python-exercises/python-basic-exercise-14.php
+
+from datetime import date
+f_date = date(2014, 7, 2)
+l_date = date(2014, 7, 11)
+delta = l_date - f_date
+print(delta.days)
+'''
+
+pass

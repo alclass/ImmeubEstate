@@ -1,0 +1,16 @@
+reportlabclient/
+venv/
+.idea/
+.vscode/
+__pycache__/
+.env
+.project
+gulpfile.js
+manage.py
+package.json
+settings.py
+*.log
+*.pdf
+*.pyc
+*.sqlite
+*.sqlite3

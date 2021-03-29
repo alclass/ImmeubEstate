@@ -1,0 +1,14 @@
+<html>
+<head>
+  <title>
+    Bank Accounts Listing
+  </title>
+</head>
+<body>
+  {% for entry in bankaccounts %}
+    <p>
+      {{ entry.account }}
+    </p>
+  {% endfor %}
+</body>
+</html>

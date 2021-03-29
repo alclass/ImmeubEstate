@@ -1,0 +1,16 @@
+<html>
+<head>
+  <title>
+    Cobranças Listing
+  </title>
+</head>
+<body>
+  {% for cobranca in cobrancas %}
+    <p>
+      <a href="{{ cobranca.route_url }}">
+        {{ cobranca }}
+      </a>
+    </p>
+  {% endfor %}
+</body>
+</html>
