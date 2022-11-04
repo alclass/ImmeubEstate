@@ -2,7 +2,7 @@
 
 # import unittest
 # from .BillMod import Bill
-import func.db.json_tofrom.jsonreaders as paymread
+import fs.db.json_tofrom.jsonreaders as paymread
 
 class Payment:
   '''

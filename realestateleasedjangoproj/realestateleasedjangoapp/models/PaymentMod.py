@@ -110,7 +110,7 @@ class Payment(models.Model):
     self.cobranca        = cobranca
     self.bankrecordsjson = None
     # OBS: the person who pays is stored in the bank_deposit object, not here
-    # the bank_deposit objects should be stored in the above list and the should be an NxM bridge table on database
+    # the bank_deposit objects should be stored in the above list and the should be an NxM bridge table on db
     # ie, the deposit record complements: user and amount to this payment if a deposit has
 
 

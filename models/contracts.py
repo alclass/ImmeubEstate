@@ -2,8 +2,8 @@
 # contracts.py
 
 import copy, datetime
-import func.textfs.ctes_n_printlist_etc as ctes
-import func.db.json_tofrom.json_readers as jreader
+import fs.textfs.ctes_n_printlist_etc as ctes
+import fs.db.json_tofrom.json_readers as jreader
 import models.immeubles
 
 KItemTypes = ctes.KItemTypes

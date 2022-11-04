@@ -7,7 +7,7 @@ This blog post is where the [inspect] module appeared first to me
 2) To help find, from dirtree, text files (py & txt) with the word "inspect", ie, helping find expression 'import inspect' 
 egrep -ir --include=*.{py,txt} "(inspect)"
 '''
-import func.textfs.ctes_n_printlist_etc as ctes
+import fs.textfs.ctes_n_printlist_etc as ctes
 K_ONE = '1'
 K_TWO = '2'
 class Bill:

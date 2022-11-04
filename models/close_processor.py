@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-import func.datefs.datebillfunctions as dtbill
-# import func.textfs as funclib
+import fs.datefs.datebillfunctions as dtbill
+# import fs.textfs as funclib
 import models.bills
-import func.db.json_tofrom.jsonreaders as paymread
-import func.db.json_tofrom.bills_json_reader as billread
+import fs.db.json_tofrom.jsonreaders as paymread
+import fs.db.json_tofrom.bills_json_reader as billread
 
 
 
@@ -12,7 +12,7 @@ class CloseProcessor:
   def __init__(self, bill_id):
 
     self.bill_id = bill_id
-    self.bill = models.bills.Bill.fetch_bill_by_id_from_json(self.bill_id)
+    self.bill = models.bills.bills.Bill.fetch_bill_by_id_from_json(self.bill_id)
     if self.bill is None:
       error_msg = 'bill_id %s does not exist in db' %self.bill_id
       raise ValueError(error_msg)

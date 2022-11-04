@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import func.db.json_tofrom.json_readers as jreader
+import fs.db.json_tofrom.json_readers as jreader
 
 import models.addresses
 
@@ -97,7 +97,7 @@ class Immeuble:
       if self.address_id is None:
         self._address = None
         return
-    self._address = models.addresses.Address.fetch_address_from_json_by_id(self.address_id)
+    self._address = models.addresses.addresses.Address.fetch_address_from_json_by_id(self.address_id)
     if self._address is None:
       return
     self._address.n_in_address = self.n_in_address

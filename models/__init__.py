@@ -8,7 +8,7 @@ import os
 
 
 def adhoc_test():
-  print ('abspath to database dir is ', BaseAppPaths.get_database_abspath())
+  print ('abspath to db dir is ', BaseAppPaths.get_database_abspath())
 
 if __name__ == '__main__':
   adhoc_test()

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import func.datefs.date_functions as dt
+import fs.datefs.date_functions as dt
 
 def call_for_test(inidatestr, n_years=1):
   print('-'*50)
